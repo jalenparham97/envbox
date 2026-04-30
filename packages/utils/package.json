@@ -1,0 +1,20 @@
+{
+  "name": "@envbox/utils",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "bun run typecheck",
+    "lint": "oxlint",
+    "typecheck": "tsc --noEmit"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*.ts"
+  },
+  "devDependencies": {
+    "@envbox/tsconfig": "workspace:*",
+    "oxlint": "latest",
+    "typescript": "^6.0.0"
+  }
+}

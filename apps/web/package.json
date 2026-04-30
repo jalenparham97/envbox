@@ -1,0 +1,27 @@
+{
+  "name": "@envbox/web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "lint": "oxlint",
+    "typecheck": "tsc --noEmit",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@envbox/ui": "workspace:*",
+    "@envbox/utils": "workspace:*",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@envbox/tsconfig": "workspace:*",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "oxlint": "latest",
+    "typescript": "^6.0.0"
+  }
+}

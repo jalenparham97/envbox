@@ -1,0 +1,26 @@
+{
+  "name": "@envbox/cli",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "envbox": "./dist/index.js",
+    "eb": "./dist/index.js"
+  },
+  "scripts": {
+    "dev": "bun run src/index.ts",
+    "envbox": "bun run src/index.ts",
+    "eb": "bun run src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target bun",
+    "lint": "oxlint",
+    "typecheck": "tsc --noEmit",
+    "start": "bun run dist/index.js"
+  },
+  "devDependencies": {
+    "@envbox/tsconfig": "workspace:*",
+    "@types/bun": "latest",
+    "@types/node": "latest",
+    "oxlint": "latest",
+    "typescript": "^6.0.0"
+  }
+}

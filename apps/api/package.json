@@ -1,0 +1,21 @@
+{
+  "name": "@envbox/api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "build": "bun build src/index.ts --outdir dist --target bun",
+    "lint": "oxlint",
+    "typecheck": "tsc --noEmit",
+    "start": "bun run dist/index.js"
+  },
+  "dependencies": {
+    "@envbox/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@envbox/tsconfig": "workspace:*",
+    "@types/bun": "latest",
+    "oxlint": "latest",
+    "typescript": "^6.0.0"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "@envbox/ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "bun run typecheck",
+    "lint": "oxlint",
+    "typecheck": "tsc --noEmit"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*.tsx"
+  },
+  "dependencies": {
+    "react": "latest"
+  },
+  "devDependencies": {
+    "@envbox/tsconfig": "workspace:*",
+    "@types/react": "latest",
+    "oxlint": "latest",
+    "typescript": "^6.0.0"
+  },
+  "peerDependencies": {
+    "react": "latest"
+  }
+}

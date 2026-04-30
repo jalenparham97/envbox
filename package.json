@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "envbox": "bun --cwd apps/cli run envbox",
+    "eb": "bun --cwd apps/cli run eb",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check"
+  },
+  "devDependencies": {
+    "oxfmt": "latest",
+    "turbo": "latest",
+    "typescript": "^6.0.0"
+  }
+}
