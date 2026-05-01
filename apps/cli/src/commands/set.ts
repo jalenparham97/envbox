@@ -3,21 +3,21 @@ import { mergeDotenv } from "../internal/dotenv";
 import { EnvboxError } from "../internal/errors";
 import { readPositionals, readStringOption } from "../internal/options";
 import { success } from "../internal/output";
-import { addVariableToTarget, filterValues, resolveTarget } from "../internal/targets";
+import { addVariableToScope, resolveScope } from "../internal/scopes";
 import type { Command } from "../internal/types";
 import { assertVariableName } from "../internal/variables";
 
 export const setCommand: Command = {
   name: "set",
-  description: "Set a value in the active profile",
-  usage: "set NAME value [--target target]",
+  description: "Set a dotenv value",
+  usage: "set NAME value [--scope scope]",
   async handler(args, context) {
-    const [name, ...valueParts] = readPositionals(args, ["--target"]);
-    const targetName = readStringOption(args, "--target");
+    const [name, ...valueParts] = readPositionals(args, ["--scope"]);
+    const scopeName = readStringOption(args, "--scope");
     const value = valueParts.join(" ");
 
     if (!name || !value) {
-      throw new EnvboxError("Usage: envbox set NAME value [--target target]");
+      throw new EnvboxError("Usage: envbox set NAME value [--scope scope]");
     }
 
     assertVariableName(name);
@@ -30,32 +30,26 @@ export const setCommand: Command = {
       secret: false,
     };
 
-    loadedConfig.config.profiles[loadedConfig.config.activeProfile] ??= {};
-    loadedConfig.config.profiles[loadedConfig.config.activeProfile][name] = value;
-
-    if (targetName) {
-      addVariableToTarget(loadedConfig.config, targetName, name);
+    if (scopeName) {
+      addVariableToScope(loadedConfig.config, scopeName, name);
     }
 
     await saveConfig(loadedConfig);
 
-    if (targetName) {
-      const target = resolveTarget(loadedConfig, targetName, context.cwd);
-      const targetValues = filterValues(
-        loadedConfig.config.profiles[loadedConfig.config.activeProfile] ?? {},
-        target.variables,
-      );
-      const contents = (await Bun.file(target.path).exists())
-        ? await Bun.file(target.path).text()
+    if (scopeName) {
+      const scope = resolveScope(loadedConfig, scopeName, context.cwd);
+      const contents = (await Bun.file(scope.path).exists())
+        ? await Bun.file(scope.path).text()
         : "";
 
-      await Bun.write(target.path, mergeDotenv(contents, targetValues));
-      context.stdout.log(
-        success(`Set ${name} for ${loadedConfig.config.activeProfile} and pulled ${target.label}.`),
-      );
+      await Bun.write(scope.path, mergeDotenv(contents, { [name]: value }));
+      context.stdout.log(success(`Set ${name} and wrote ${scope.label}.`));
       return;
     }
 
-    context.stdout.log(success(`Set ${name} for ${loadedConfig.config.activeProfile}.`));
+    const scope = resolveScope(loadedConfig, undefined, context.cwd);
+    const contents = (await Bun.file(scope.path).exists()) ? await Bun.file(scope.path).text() : "";
+    await Bun.write(scope.path, mergeDotenv(contents, { [name]: value }));
+    context.stdout.log(success(`Set ${name} and wrote ${scope.label}.`));
   },
 };

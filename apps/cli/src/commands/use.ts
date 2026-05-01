@@ -24,7 +24,6 @@ export const useCommand: Command = {
 
     const loadedConfig = await loadConfig(context.cwd);
     loadedConfig.config.activeProfile = profileName;
-    loadedConfig.config.profiles[profileName] ??= {};
 
     await saveConfig(loadedConfig);
     context.stdout.log(success(`Using ${profileName}.`));

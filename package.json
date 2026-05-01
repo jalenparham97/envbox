@@ -7,8 +7,8 @@
   ],
   "scripts": {
     "dev": "turbo run dev",
-    "envbox": "bun --cwd apps/cli run envbox",
-    "eb": "bun --cwd apps/cli run eb",
+    "envbox": "bun apps/cli/src/index.ts",
+    "eb": "bun apps/cli/src/index.ts",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",

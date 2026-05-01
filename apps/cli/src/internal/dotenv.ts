@@ -54,6 +54,16 @@ export function mergeDotenv(contents: string, values: Record<string, string>): s
   return `${lines.join("\n")}\n`;
 }
 
+export function removeDotenvValue(contents: string, variableName: string): string {
+  const lines = contents.split(/\r?\n/).filter((line) => getDotenvName(line) !== variableName);
+
+  if (lines.at(-1) === "") {
+    lines.pop();
+  }
+
+  return `${lines.join("\n")}\n`;
+}
+
 function getDotenvName(line: string): string | null {
   const match = line.match(/^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=/);
 

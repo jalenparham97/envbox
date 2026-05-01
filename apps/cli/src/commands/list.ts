@@ -1,28 +1,41 @@
 import { loadConfig } from "../internal/config";
+import { parseDotenv } from "../internal/dotenv";
+import { readStringOption } from "../internal/options";
+import { formatRows, muted, value } from "../internal/output";
+import { filterValues, resolveScope } from "../internal/scopes";
 import type { Command } from "../internal/types";
 import { maskValue } from "../internal/variables";
 
 export const listCommand: Command = {
   name: "list",
-  description: "List values for the active profile",
-  usage: "list [--show-secrets]",
+  description: "List dotenv values",
+  usage: "list [--scope scope] [--show-secrets]",
   async handler(args, context) {
-    const { config } = await loadConfig(context.cwd);
-    const values = config.profiles[config.activeProfile] ?? {};
+    const loadedConfig = await loadConfig(context.cwd);
+    const { config } = loadedConfig;
+    const scopeName = readStringOption(args, "--scope");
+    const scope = resolveScope(loadedConfig, scopeName, context.cwd);
+    const values = filterValues(
+      (await Bun.file(scope.path).exists()) ? parseDotenv(await Bun.file(scope.path).text()) : {},
+      scope.variables,
+    );
     const entries = Object.entries(values);
 
     if (entries.length === 0) {
-      context.stdout.log(`No variables set for ${config.activeProfile}.`);
+      context.stdout.log(muted(`No variables set in ${scope.label}.`));
       return;
     }
 
-    for (const [name, value] of entries) {
+    const rows = entries.map(([name, currentValue]): [string, string] => {
       const variable = config.variables[name];
       const visibleValue = maskValue(
-        value,
+        currentValue,
         Boolean(variable?.secret) && !args.includes("--show-secrets"),
       );
-      context.stdout.log(`${name}=${visibleValue}`);
-    }
+
+      return [name, value(visibleValue)];
+    });
+
+    context.stdout.log(formatRows(rows));
   },
 };

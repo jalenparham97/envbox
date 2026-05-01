@@ -1,45 +1,43 @@
 import { loadConfig, saveConfig } from "../internal/config";
 import { parseDotenv } from "../internal/dotenv";
 import { success } from "../internal/output";
-import { filterValues, resolveTarget } from "../internal/targets";
+import { filterValues, resolveScope } from "../internal/scopes";
 import type { Command, CommandContext } from "../internal/types";
-import { assertVariableName } from "../internal/variables";
+import {
+  assertVariableName,
+  createVariableDefinition,
+  inferVariableType,
+} from "../internal/variables";
 
 export const pushCommand: Command = {
   name: "push",
-  description: "Push dotenv values into the active profile",
-  usage: "push [target|file]",
+  description: "Import dotenv variables into envbox metadata",
+  usage: "push [scope|file]",
   handler: pushDotenv,
 };
 
 export async function pushDotenv(args: string[], context: CommandContext): Promise<void> {
-  const targetOrFile = args.find((arg) => !arg.startsWith("--"));
+  const scopeOrFile = args.find((arg) => !arg.startsWith("--"));
   const loadedConfig = await loadConfig(context.cwd);
-  const target = resolveTarget(loadedConfig, targetOrFile, context.cwd);
+  const scope = resolveScope(loadedConfig, scopeOrFile, context.cwd);
 
-  if (!(await Bun.file(target.path).exists())) {
-    await Bun.write(target.path, "");
+  if (!(await Bun.file(scope.path).exists())) {
+    await Bun.write(scope.path, "");
   }
 
-  const contents = await Bun.file(target.path).text();
-  const values = filterValues(parseDotenv(contents), target.variables);
-  const activeValues = (loadedConfig.config.profiles[loadedConfig.config.activeProfile] ??= {});
+  const contents = await Bun.file(scope.path).text();
+  const values = filterValues(parseDotenv(contents), scope.variables);
 
   for (const [name, value] of Object.entries(values)) {
     assertVariableName(name);
-    loadedConfig.config.variables[name] ??= {
+    loadedConfig.config.variables[name] ??= createVariableDefinition(
       name,
-      type: "string",
-      required: false,
-      secret: false,
-    };
-    activeValues[name] = value;
+      inferVariableType(value),
+    );
   }
 
   await saveConfig(loadedConfig);
   context.stdout.log(
-    success(
-      `Pushed ${Object.keys(values).length} variables from ${target.label} into ${loadedConfig.config.activeProfile}.`,
-    ),
+    success(`Imported ${Object.keys(values).length} variables from ${scope.label}.`),
   );
 }

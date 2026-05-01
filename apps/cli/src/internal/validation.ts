@@ -1,11 +1,13 @@
 import type { EnvboxConfig, ValidationIssue } from "./types";
 
-export function validateConfig(config: EnvboxConfig): ValidationIssue[] {
+export function validateConfig(
+  config: EnvboxConfig,
+  values: Record<string, string>,
+): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
-  const activeValues = config.profiles[config.activeProfile] ?? {};
 
   for (const variable of Object.values(config.variables)) {
-    const value = activeValues[variable.name];
+    const value = values[variable.name];
 
     if (variable.required && !value) {
       issues.push({ name: variable.name, message: "required value is missing" });

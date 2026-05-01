@@ -7,7 +7,7 @@ export type VariableDefinition = {
   secret: boolean;
 };
 
-export type EnvboxTarget = {
+export type EnvboxScope = {
   path: string;
   variables: string[];
 };
@@ -16,8 +16,7 @@ export type EnvboxConfig = {
   projectName: string;
   activeProfile: string;
   variables: Record<string, VariableDefinition>;
-  profiles: Record<string, Record<string, string>>;
-  targets: Record<string, EnvboxTarget>;
+  scopes: Record<string, EnvboxScope>;
 };
 
 export type ValidationIssue = {

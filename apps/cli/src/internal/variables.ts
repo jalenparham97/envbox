@@ -25,6 +25,18 @@ export function createVariableDefinition(
   };
 }
 
+export function inferVariableType(value: string): VariableType {
+  if (value === "true" || value === "false") {
+    return "boolean";
+  }
+
+  if (value.trim() !== "" && !Number.isNaN(Number(value))) {
+    return "number";
+  }
+
+  return "string";
+}
+
 export function maskValue(value: string, shouldMask: boolean): string {
   if (!shouldMask) {
     return value;

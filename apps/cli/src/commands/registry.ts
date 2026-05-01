@@ -5,10 +5,11 @@ import { initCommand } from "./init";
 import { listCommand } from "./list";
 import { pullCommand } from "./pull";
 import { pushCommand } from "./push";
+import { scopeCommand } from "./scope";
 import { setCommand } from "./set";
 import { statusCommand } from "./status";
-import { targetCommand } from "./target";
 import { unsetCommand } from "./unset";
+import { updateCommand } from "./update";
 import { useCommand } from "./use";
 import { validateCommand } from "./validate";
 
@@ -18,11 +19,12 @@ export const commands: Command[] = [
   listCommand,
   getCommand,
   setCommand,
+  updateCommand,
   unsetCommand,
   useCommand,
   validateCommand,
   pushCommand,
   pullCommand,
-  targetCommand,
+  scopeCommand,
   statusCommand,
 ];

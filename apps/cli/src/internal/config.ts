@@ -3,7 +3,7 @@ import { basename, dirname, join, parse } from "node:path";
 import { $ } from "bun";
 
 import { EnvboxError } from "./errors";
-import type { EnvboxConfig } from "./types";
+import type { EnvboxConfig, EnvboxScope, VariableDefinition } from "./types";
 
 export const configDirectoryName = ".envbox";
 export const configFileName = "config.json";
@@ -13,7 +13,17 @@ export type LoadedConfig = {
   path: string;
 };
 
-export async function createConfig(cwd: string, projectName?: string): Promise<LoadedConfig> {
+export type CreateConfigOptions = {
+  projectName?: string;
+  activeProfile?: string;
+  variables?: Record<string, VariableDefinition>;
+  scopes?: Record<string, EnvboxScope>;
+};
+
+export async function createConfig(
+  cwd: string,
+  options: CreateConfigOptions = {},
+): Promise<LoadedConfig> {
   const path = getConfigPath(cwd);
 
   if (await fileExists(path)) {
@@ -21,13 +31,10 @@ export async function createConfig(cwd: string, projectName?: string): Promise<L
   }
 
   const config: EnvboxConfig = {
-    projectName: projectName ?? basename(cwd),
-    activeProfile: "dev",
-    variables: {},
-    profiles: {
-      dev: {},
-    },
-    targets: {},
+    projectName: options.projectName ?? basename(cwd),
+    activeProfile: options.activeProfile ?? "dev",
+    variables: options.variables ?? {},
+    scopes: options.scopes ?? {},
   };
 
   await saveConfig({ config, path });
@@ -44,9 +51,7 @@ export async function loadConfig(cwd: string): Promise<LoadedConfig> {
 
   try {
     const contents = await Bun.file(path).text();
-    const config = JSON.parse(contents) as EnvboxConfig;
-    config.profiles[config.activeProfile] ??= {};
-    config.targets ??= {};
+    const config = normalizeConfig(JSON.parse(contents) as Partial<EnvboxConfig>);
 
     return { config, path };
   } catch {
@@ -85,4 +90,13 @@ async function findConfigPath(startDirectory: string): Promise<string | null> {
 
 async function fileExists(path: string): Promise<boolean> {
   return Bun.file(path).exists();
+}
+
+function normalizeConfig(config: Partial<EnvboxConfig>): EnvboxConfig {
+  return {
+    projectName: config.projectName ?? "envbox",
+    activeProfile: config.activeProfile ?? "dev",
+    variables: config.variables ?? {},
+    scopes: config.scopes ?? {},
+  };
 }
