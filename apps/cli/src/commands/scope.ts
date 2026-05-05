@@ -1,8 +1,8 @@
-import { loadConfig, saveConfig } from "../internal/config";
-import { EnvboxError } from "../internal/errors";
+import { loadConfig, saveConfig } from "@envbox/core/config";
+import { EnvboxError } from "@envbox/core/errors";
 import { formatRows, muted, success, value } from "../internal/output";
 import { parseVariableList, promptText } from "../internal/prompts";
-import { assertScopeName, createScope } from "../internal/scopes";
+import { assertScopeName, createScope } from "@envbox/core/scopes";
 import type { Command } from "../internal/types";
 
 export const scopeCommand: Command = {

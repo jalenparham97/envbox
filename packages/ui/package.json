@@ -13,13 +13,13 @@
     "./*": "./src/*.tsx"
   },
   "dependencies": {
-    "react": "latest"
+    "react": "^19.2.5"
   },
   "devDependencies": {
     "@envbox/tsconfig": "workspace:*",
-    "@types/react": "latest",
-    "oxlint": "latest",
-    "typescript": "^6.0.0"
+    "@types/react": "^19.2.14",
+    "oxlint": "^1.62.0",
+    "typescript": "^6.0.3"
   },
   "peerDependencies": {
     "react": "latest"

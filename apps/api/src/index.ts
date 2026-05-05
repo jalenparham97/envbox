@@ -1,10 +1,10 @@
-import { getGreeting } from "@envbox/utils";
+import app from "./app";
 
-const server = Bun.serve({
-  port: Number(process.env.PORT ?? 3001),
-  fetch() {
-    return Response.json({ message: getGreeting("Envbox API") });
-  },
-});
+const port = Number(process.env.PORT ?? 3001);
 
-console.log(`API listening on http://localhost:${server.port}`);
+console.log(`API listening on http://localhost:${port}`);
+
+export default {
+  port,
+  fetch: app.fetch,
+};

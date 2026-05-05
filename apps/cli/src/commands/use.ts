@@ -1,5 +1,5 @@
-import { loadConfig, saveConfig } from "../internal/config";
-import { EnvboxError } from "../internal/errors";
+import { loadConfig, saveConfig } from "@envbox/core/config";
+import { EnvboxError } from "@envbox/core/errors";
 import { success } from "../internal/output";
 import type { Command } from "../internal/types";
 

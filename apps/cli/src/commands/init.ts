@@ -1,12 +1,14 @@
 import { basename, resolve } from "node:path";
 
-import { createConfig } from "../internal/config";
-import { parseDotenv } from "../internal/dotenv";
+import { createConfig } from "@envbox/core/config";
+import { parseDotenv } from "@envbox/core/dotenv";
 import { success } from "../internal/output";
 import { parseVariableList, promptConfirm, promptText } from "../internal/prompts";
-import { assertScopeName, createScope } from "../internal/scopes";
+import { assertScopeName, createScope } from "@envbox/core/scopes";
 import type { Command } from "../internal/types";
-import { createVariableDefinition, inferVariableType } from "../internal/variables";
+import { createVariableDefinition, inferVariableType } from "@envbox/core/variables";
+import type { CreateConfigOptions } from "@envbox/core/config";
+import type { VariableDefinition } from "@envbox/core/types";
 
 export const initCommand: Command = {
   name: "init",
@@ -25,8 +27,8 @@ export const initCommand: Command = {
     const activeProfile = isInteractive
       ? await promptText({ message: "Default profile", defaultValue: "dev", placeholder: "dev" })
       : "dev";
-    const variables: Record<string, ReturnType<typeof createVariableDefinition>> = {};
-    const scopes: Parameters<typeof createConfig>[1]["scopes"] = {};
+    const variables: Record<string, VariableDefinition> = {};
+    const scopes: NonNullable<CreateConfigOptions["scopes"]> = {};
     const rootDotenvPath = resolve(context.cwd, ".env");
     const shouldCreateRootDotenv =
       isInteractive &&
@@ -46,6 +48,10 @@ export const initCommand: Command = {
         defaultValue: "app",
         placeholder: "web",
         validate(value) {
+          if (!value) {
+            return "Scope name is required.";
+          }
+
           try {
             assertScopeName(value);
           } catch {
@@ -53,6 +59,7 @@ export const initCommand: Command = {
           }
         },
       });
+      const scopePath = await promptText({
         message: ".env path",
         defaultValue: ".env",
         placeholder: "apps/web/.env",
@@ -86,11 +93,7 @@ export const initCommand: Command = {
             continue;
           }
 
-          variables[variableName] = createVariableDefinition(
-            variableName,
-            inferVariableType(value),
-          );
-          profileValues[variableName] = value;
+          variables[variableName] = createVariableDefinition(variableName, inferVariableType(value));
         }
       }
     }

@@ -1,0 +1,27 @@
+{
+  "name": "@envbox/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./config": "./src/config.ts",
+    "./dotenv": "./src/dotenv.ts",
+    "./errors": "./src/errors.ts",
+    "./scopes": "./src/scopes.ts",
+    "./types": "./src/types.ts",
+    "./validation": "./src/validation.ts",
+    "./variables": "./src/variables.ts"
+  },
+  "scripts": {
+    "build": "bun run typecheck",
+    "lint": "oxlint",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@envbox/tsconfig": "workspace:*",
+    "@types/bun": "^1.3.13",
+    "@types/node": "~24",
+    "oxlint": "^1.62.0",
+    "typescript": "^6.0.3"
+  }
+}

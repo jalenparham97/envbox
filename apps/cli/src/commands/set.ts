@@ -1,11 +1,11 @@
-import { loadConfig, saveConfig } from "../internal/config";
-import { mergeDotenv } from "../internal/dotenv";
-import { EnvboxError } from "../internal/errors";
+import { loadConfig, saveConfig } from "@envbox/core/config";
+import { mergeDotenv } from "@envbox/core/dotenv";
+import { EnvboxError } from "@envbox/core/errors";
 import { readPositionals, readStringOption } from "../internal/options";
 import { success } from "../internal/output";
-import { addVariableToScope, resolveScope } from "../internal/scopes";
+import { addVariableToScope, resolveScope } from "@envbox/core/scopes";
 import type { Command } from "../internal/types";
-import { assertVariableName } from "../internal/variables";
+import { assertVariableName } from "@envbox/core/variables";
 
 export const setCommand: Command = {
   name: "set",

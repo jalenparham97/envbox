@@ -1,11 +1,11 @@
-import { loadConfig } from "../internal/config";
-import { parseDotenv } from "../internal/dotenv";
-import { EnvboxError } from "../internal/errors";
+import { loadConfig } from "@envbox/core/config";
+import { parseDotenv } from "@envbox/core/dotenv";
+import { EnvboxError } from "@envbox/core/errors";
 import { readPositionals, readStringOption } from "../internal/options";
 import { value as formatValue } from "../internal/output";
-import { assertVariableInScope, resolveScope } from "../internal/scopes";
+import { assertVariableInScope, resolveScope } from "@envbox/core/scopes";
 import type { Command } from "../internal/types";
-import { assertVariableName, maskValue } from "../internal/variables";
+import { assertVariableName, maskValue } from "@envbox/core/variables";
 
 export const getCommand: Command = {
   name: "get",

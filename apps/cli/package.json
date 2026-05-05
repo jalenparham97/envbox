@@ -17,13 +17,14 @@
     "start": "bun run dist/index.js"
   },
   "dependencies": {
-    "@clack/prompts": "^1.3.0"
+    "@clack/prompts": "^1.3.0",
+    "@envbox/core": "workspace:*"
   },
   "devDependencies": {
     "@envbox/tsconfig": "workspace:*",
-    "@types/bun": "latest",
-    "@types/node": "latest",
-    "oxlint": "latest",
-    "typescript": "^6.0.0"
+    "@types/bun": "^1.3.13",
+    "@types/node": "~24",
+    "oxlint": "^1.62.0",
+    "typescript": "^6.0.3"
   }
 }

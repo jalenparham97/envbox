@@ -12,16 +12,16 @@
   "dependencies": {
     "@envbox/ui": "workspace:*",
     "@envbox/utils": "workspace:*",
-    "next": "latest",
-    "react": "latest",
-    "react-dom": "latest"
+    "next": "^16.2.4",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
   },
   "devDependencies": {
     "@envbox/tsconfig": "workspace:*",
-    "@types/node": "latest",
-    "@types/react": "latest",
-    "@types/react-dom": "latest",
-    "oxlint": "latest",
-    "typescript": "^6.0.0"
+    "@types/node": "~24",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "oxlint": "^1.62.0",
+    "typescript": "^6.0.3"
   }
 }

@@ -1,10 +1,10 @@
-import { loadConfig } from "../internal/config";
-import { parseDotenv } from "../internal/dotenv";
+import { loadConfig } from "@envbox/core/config";
+import { parseDotenv } from "@envbox/core/dotenv";
 import { readStringOption } from "../internal/options";
 import { error, formatRows, success, value } from "../internal/output";
-import { filterValues, resolveScope } from "../internal/scopes";
+import { filterValues, resolveScope } from "@envbox/core/scopes";
 import type { Command } from "../internal/types";
-import { validateConfig } from "../internal/validation";
+import { validateConfig } from "@envbox/core/validation";
 
 export const validateCommand: Command = {
   name: "validate",

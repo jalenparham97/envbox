@@ -1,13 +1,13 @@
-import { loadConfig, saveConfig } from "../internal/config";
-import { parseDotenv } from "../internal/dotenv";
+import { loadConfig, saveConfig } from "@envbox/core/config";
+import { parseDotenv } from "@envbox/core/dotenv";
 import { success } from "../internal/output";
-import { filterValues, resolveScope } from "../internal/scopes";
+import { filterValues, resolveScope } from "@envbox/core/scopes";
 import type { Command, CommandContext } from "../internal/types";
 import {
   assertVariableName,
   createVariableDefinition,
   inferVariableType,
-} from "../internal/variables";
+} from "@envbox/core/variables";
 
 export const pushCommand: Command = {
   name: "push",

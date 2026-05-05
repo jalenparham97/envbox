@@ -1,6 +1,6 @@
 import { cancel, confirm, isCancel, select, text } from "@clack/prompts";
 
-import type { VariableType } from "./types";
+import type { VariableType } from "@envbox/core/types";
 
 type PromptResult<T> = T | symbol;
 

@@ -1,9 +1,9 @@
-import { loadConfig } from "../internal/config";
-import { parseDotenv } from "../internal/dotenv";
+import { loadConfig } from "@envbox/core/config";
+import { parseDotenv } from "@envbox/core/dotenv";
 import { formatRows, value } from "../internal/output";
-import { resolveScope } from "../internal/scopes";
+import { resolveScope } from "@envbox/core/scopes";
 import type { Command } from "../internal/types";
-import { validateConfig } from "../internal/validation";
+import { validateConfig } from "@envbox/core/validation";
 
 export const statusCommand: Command = {
   name: "status",

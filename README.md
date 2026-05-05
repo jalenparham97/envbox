@@ -111,7 +111,7 @@ bun run envbox scope add web apps/web/.env NEXT_PUBLIC_API_URL API_URL
 Package scope:
 
 ```sh
-bun run envbox scope add db packages/db/.env DATABASE_URL DIRECT_URL
+bun run envbox scope add db packages/database/.env DATABASE_URL DIRECT_URL
 ```
 
 List scopes:
@@ -233,7 +233,7 @@ For monorepos, initialize envbox at the repo root and create scopes for each app
 bun run envbox init
 bun run envbox scope add web apps/web/.env NEXT_PUBLIC_API_URL
 bun run envbox scope add api apps/api/.env DATABASE_URL PORT
-bun run envbox scope add db packages/db/.env DATABASE_URL DIRECT_URL
+bun run envbox scope add db packages/database/.env DATABASE_URL DIRECT_URL
 ```
 
 Then manage each scope independently:

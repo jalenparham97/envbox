@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 
 import { commands } from "./commands/registry";
-import { EnvboxError } from "./internal/errors";
+import { EnvboxError } from "@envbox/core/errors";
 import { error } from "./internal/output";
 import type { CommandContext } from "./internal/types";
 

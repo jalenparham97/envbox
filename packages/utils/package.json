@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@envbox/tsconfig": "workspace:*",
-    "oxlint": "latest",
-    "typescript": "^6.0.0"
+    "oxlint": "^1.62.0",
+    "typescript": "^6.0.3"
   }
 }

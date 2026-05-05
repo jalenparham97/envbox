@@ -1,16 +1,16 @@
-import { loadConfig, saveConfig } from "../internal/config";
-import { mergeDotenv } from "../internal/dotenv";
-import { EnvboxError } from "../internal/errors";
+import { loadConfig, saveConfig } from "@envbox/core/config";
+import { mergeDotenv } from "@envbox/core/dotenv";
+import { EnvboxError } from "@envbox/core/errors";
 import { hasFlag, readPositionals, readStringOption, readTypeOption } from "../internal/options";
 import { success } from "../internal/output";
 import { promptConfirm, promptScopeName, promptText, promptType } from "../internal/prompts";
-import { addVariableToScope, resolveScope } from "../internal/scopes";
+import { addVariableToScope, resolveScope } from "@envbox/core/scopes";
 import type { Command } from "../internal/types";
 import {
   assertVariableName,
   createVariableDefinition,
   inferVariableType,
-} from "../internal/variables";
+} from "@envbox/core/variables";
 
 export const addCommand: Command = {
   name: "add",
@@ -26,6 +26,10 @@ export const addCommand: Command = {
         message: "Variable name",
         placeholder: "DATABASE_URL",
         validate(value) {
+          if (!value) {
+            return "Variable name is required.";
+          }
+
           try {
             assertVariableName(value);
           } catch (error) {

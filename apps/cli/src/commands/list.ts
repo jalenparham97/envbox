@@ -1,10 +1,10 @@
-import { loadConfig } from "../internal/config";
-import { parseDotenv } from "../internal/dotenv";
+import { loadConfig } from "@envbox/core/config";
+import { parseDotenv } from "@envbox/core/dotenv";
 import { readStringOption } from "../internal/options";
 import { formatRows, muted, value } from "../internal/output";
-import { filterValues, resolveScope } from "../internal/scopes";
+import { filterValues, resolveScope } from "@envbox/core/scopes";
 import type { Command } from "../internal/types";
-import { maskValue } from "../internal/variables";
+import { maskValue } from "@envbox/core/variables";
 
 export const listCommand: Command = {
   name: "list",

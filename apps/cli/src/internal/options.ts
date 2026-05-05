@@ -1,5 +1,5 @@
-import { EnvboxError } from "./errors";
-import type { VariableType } from "./types";
+import { EnvboxError } from "@envbox/core/errors";
+import type { VariableType } from "@envbox/core/types";
 
 const variableTypes = new Set<VariableType>(["string", "number", "boolean", "secret"]);
 

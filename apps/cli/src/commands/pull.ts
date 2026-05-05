@@ -1,4 +1,4 @@
-import { EnvboxError } from "../internal/errors";
+import { EnvboxError } from "@envbox/core/errors";
 import type { Command, CommandContext } from "../internal/types";
 
 export const pullCommand: Command = {
