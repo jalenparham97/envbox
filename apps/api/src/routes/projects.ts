@@ -1,5 +1,6 @@
-import { db } from "@envbox/database";
 import { Hono } from "hono";
+
+import { db } from "@envbox/database";
 
 import { apiError } from "../lib/errors";
 

@@ -31,12 +31,14 @@ export const apiErrors = {
   invalidProfileName: {
     status: 400,
     code: "INVALID_PROFILE_NAME",
-    message: "Profile names must start with a letter and use letters, numbers, underscores, or dashes.",
+    message:
+      "Profile names must start with a letter and use letters, numbers, underscores, or dashes.",
   },
   projectEnvNotFound: {
     status: 404,
     code: "PROJECT_ENV_NOT_FOUND",
-    message: "We couldn't find environment data for this project. Check the project id and try again.",
+    message:
+      "We couldn't find environment data for this project. Check the project id and try again.",
   },
   internalServerError: {
     status: 500,

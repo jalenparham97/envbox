@@ -2,8 +2,8 @@ import { Hono } from "hono";
 
 import { apiError, formatApiError } from "./lib/errors";
 import { healthRoutes } from "./routes/health";
-import { projectsRoutes } from "./routes/projects";
 import { projectEnvRoutes } from "./routes/project-env";
+import { projectsRoutes } from "./routes/projects";
 
 export function createApp() {
   const app = new Hono({ strict: false });
